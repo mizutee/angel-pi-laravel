@@ -1,0 +1,54 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\StudentController;
+
+Route::get('/login', function () {
+    $user = auth()->user();
+    if ($user) {
+        return redirect('/');
+    }
+    return view('login');
+})->name('login');
+Route::post('/login', [UserController::class, 'loginUser']);
+
+Route::get('/register', function () {
+    $user = auth()->user();
+    if ($user) {
+        return redirect('/');
+    }
+    return view('register');
+});
+Route::post('/register', [UserController::class, 'registerUser']);
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', function() {
+        $user = auth()->user();
+        if (!$user) {
+            return redirect('/login');
+        }
+        return view('home', ['user' => $user]);
+    });
+
+    Route::get('/admin/teacher', [TeacherController::class, 'getTeachersInfo']);
+    Route::put('/admin/teacher/{id}', [TeacherController::class, 'editTeacherInfo'])->name('teacher.update');
+    Route::post('/admin/teacher', [TeacherController::class, 'addTeacher'])->name('teacher.add');
+    Route::delete('/admin/teacher/{id}', [TeacherController::class, 'deleteTeacher'])->name('teacher.delete');
+    
+    Route::get('/admin/question', [QuestionController::class, 'getQuestionsInfo']);
+    Route::post('/admin/question', [QuestionController::class, 'addQuestion'])->name('question.add');
+    Route::put('/admin/question/{id}', [QuestionController::class, 'editQuestionInfo'])->name('question.update');
+    Route::delete('/admin/question/{id}', [QuestionController::class, 'deleteQuestion'])->name('question.delete');
+
+    Route::get('/student/myclass', [StudentController::class, 'getStudentClasses']);
+    Route::get('/student/survey', [StudentController::class, 'getStudentSurvey']);
+    Route::post('/student/survey', [StudentController::class, 'submitStudentSurvey'])->name('survey.submit');
+
+    Route::get('/teacher/survey', [TeacherController::class, 'getTeacherSurvey'])->name('teacher.survey');
+
+    Route::post('/logout', [UserController::class, 'logoutUser'])->name('user.logout');
+});
