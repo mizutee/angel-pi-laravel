@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     public function registerUser(Request $request) {
+        \Log::info('Registering user', $request->all());
         $incomingFields = $request->validate([
             'name' => ['required', 'min:1', Rule::unique('users', 'name')],
             'email' => ['required', Rule::unique('users', 'email')],

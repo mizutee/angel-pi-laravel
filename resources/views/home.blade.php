@@ -41,6 +41,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="/admin/student" class="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded-lg">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>Student's List</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="/admin/question" class="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded-lg">
                             <i class="fas fa-question-circle"></i>
                             <span>Survey Questions</span>
@@ -117,10 +123,10 @@
                 window.location.href = 'login.html';
             }
         }
-        document.getElementById('closeToast').addEventListener('click', function() {
-            const toast = document.getElementById('failedToast');
-            toast.style.display = 'none'; // Hide the toast
-        });
+        // document.getElementById('closeToast').addEventListener('click', function() {
+        //     const toast = document.getElementById('failedToast');
+        //     toast.style.display = 'none'; // Hide the toast
+        // });
     </script>
 </body>
 </html>

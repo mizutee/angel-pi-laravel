@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Subject;
 use Illuminate\Http\Request;
+use App\Models\Answer;
+use App\Models\Question;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class TeacherController extends Controller
 {
@@ -65,6 +69,128 @@ class TeacherController extends Controller
 
     public function getTeacherSurvey() {
         $user = auth()->user();
-        return view('teachersurvey', ['user' => $user]);
+    
+        $query = Answer::join('questions', 'answers.question_id', '=', 'questions.id')
+            ->join('types', 'questions.type_id', '=', 'types.id')
+            ->select(
+                'types.name as type', 
+                'questions.question as question',
+                DB::raw('COUNT(DISTINCT answers.student_id) as total_students'),
+                DB::raw('COUNT(CASE WHEN answers.experience_value = 1 THEN 1 END) as exp_1'),
+                DB::raw('COUNT(CASE WHEN answers.experience_value = 2 THEN 1 END) as exp_2'),
+                DB::raw('COUNT(CASE WHEN answers.experience_value = 3 THEN 1 END) as exp_3'),
+                DB::raw('COUNT(CASE WHEN answers.experience_value = 4 THEN 1 END) as exp_4'),
+                DB::raw('COUNT(CASE WHEN answers.experience_value = 5 THEN 1 END) as exp_5'),
+                DB::raw('COUNT(CASE WHEN answers.expectation_value = 1 THEN 1 END) as expc_1'),
+                DB::raw('COUNT(CASE WHEN answers.expectation_value = 2 THEN 1 END) as expc_2'),
+                DB::raw('COUNT(CASE WHEN answers.expectation_value = 3 THEN 1 END) as expc_3'),
+                DB::raw('COUNT(CASE WHEN answers.expectation_value = 4 THEN 1 END) as expc_4'),
+                DB::raw('COUNT(CASE WHEN answers.expectation_value = 5 THEN 1 END) as expc_5')
+            )
+            ->where('answers.teacher_id', $user->id)
+            ->groupBy('types.name', 'questions.question');
+    
+        // Execute the query
+        $surveyResults = $query->get();
+
+        $totalStudents = $surveyResults->isNotEmpty() ? $surveyResults->first()->total_students : 0;
+    
+        // Initialize total counts
+        $totalExperienceCounts = ["1" => 0, "2" => 0, "3" => 0, "4" => 0, "5" => 0];
+
+        // Sum all experience values
+        foreach ($surveyResults as $item) {
+            $totalExperienceCounts["1"] += $item->exp_1;
+            $totalExperienceCounts["2"] += $item->exp_2;
+            $totalExperienceCounts["3"] += $item->exp_3;
+            $totalExperienceCounts["4"] += $item->exp_4;
+            $totalExperienceCounts["5"] += $item->exp_5;
+        }
+
+        // Calculate total responses
+        $totalExperienceSum = array_sum($totalExperienceCounts);
+
+        // Calculate percentages
+        $experiencePercentages = [];
+        foreach ($totalExperienceCounts as $key => $count) {
+            $experiencePercentages[$key] = $totalExperienceSum > 0 ? round(($count / $totalExperienceSum) * 100, 2) : 0;
+        }
+
+        // Total experience summary
+        $totalExperienceSummary = [
+            "total_counts" => $totalExperienceCounts,
+            "total_responses" => $totalExperienceSum,
+            "percentages" => $experiencePercentages
+        ];
+    
+        // Transform results into grouped format with percentages
+        $formattedResults = $surveyResults->groupBy('type')->map(function ($group, $type) {
+            return [
+                'type' => $type,
+                'questions' => $group->map(function ($item) {
+                    $totalExperience = $item->exp_1 + $item->exp_2 + $item->exp_3 + $item->exp_4 + $item->exp_5;
+                    $totalExpectation = $item->expc_1 + $item->expc_2 + $item->expc_3 + $item->expc_4 + $item->expc_5;
+                    
+                    return [
+                        'question' => $item->question,
+                        'average' => number_format((($item->exp_1 * 1) + ($item->exp_2 * 2) + ($item->exp_3 * 3) + ($item->exp_4 * 4) + ($item->exp_5 * 5))  / ($item->exp_1 + $item->exp_2 + $item->exp_3 + $item->exp_4 + $item->exp_5), 2),
+                        'experience' => [
+                            "1" => [
+                                "count" => $item->exp_1,
+                                "percentage" => $totalExperience > 0 ? round(($item->exp_1 / $totalExperience) * 100, 2) : 0
+                            ],
+                            "2" => [
+                                "count" => $item->exp_2,
+                                "percentage" => $totalExperience > 0 ? round(($item->exp_2 / $totalExperience) * 100, 2) : 0
+                            ],
+                            "3" => [
+                                "count" => $item->exp_3,
+                                "percentage" => $totalExperience > 0 ? round(($item->exp_3 / $totalExperience) * 100, 2) : 0
+                            ],
+                            "4" => [
+                                "count" => $item->exp_4,
+                                "percentage" => $totalExperience > 0 ? round(($item->exp_4 / $totalExperience) * 100, 2) : 0
+                            ],
+                            "5" => [
+                                "count" => $item->exp_5,
+                                "percentage" => $totalExperience > 0 ? round(($item->exp_5 / $totalExperience) * 100, 2) : 0
+                            ],
+                        ],
+                        'expectation' => [
+                            "1" => [
+                                "count" => $item->expc_1,
+                                "percentage" => $totalExpectation > 0 ? round(($item->expc_1 / $totalExpectation) * 100, 2) : 0
+                            ],
+                            "2" => [
+                                "count" => $item->expc_2,
+                                "percentage" => $totalExpectation > 0 ? round(($item->expc_2 / $totalExpectation) * 100, 2) : 0
+                            ],
+                            "3" => [
+                                "count" => $item->expc_3,
+                                "percentage" => $totalExpectation > 0 ? round(($item->expc_3 / $totalExpectation) * 100, 2) : 0
+                            ],
+                            "4" => [
+                                "count" => $item->expc_4,
+                                "percentage" => $totalExpectation > 0 ? round(($item->expc_4 / $totalExpectation) * 100, 2) : 0
+                            ],
+                            "5" => [
+                                "count" => $item->expc_5,
+                                "percentage" => $totalExpectation > 0 ? round(($item->expc_5 / $totalExpectation) * 100, 2) : 0
+                            ],
+                        ]
+                    ];
+                })->values()
+            ];
+        })->values();
+    
+        return view('teachersurvey', [
+            'user' => $user,
+            'total_students' => $totalStudents,
+            'total_experience_summary' => $totalExperienceSummary,
+            'result' => $formattedResults,
+        ]);
     }
+
+    
+    
 }

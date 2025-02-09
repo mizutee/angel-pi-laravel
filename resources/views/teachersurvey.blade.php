@@ -7,7 +7,7 @@
                 <h1 class="text-2xl font-bold">Student Evaluation Results</h1>
                 <div class="flex items-center gap-4">
                     <span class="text-gray-600">Total Responses:</span>
-                    <span class="text-lg font-semibold bg-blue-100 text-blue-800 px-3 py-1 rounded-full">32</span>
+                    <span class="text-lg font-semibold bg-blue-100 text-blue-800 px-3 py-1 rounded-full">{{ $total_students }}</span>
                 </div>
             </div>
 
@@ -20,31 +20,31 @@
                             <th class="px-6 py-4 text-center text-sm font-medium text-gray-500 uppercase tracking-wider">
                                 <div class="flex flex-col items-center">
                                     <span class="text-red-500">Very Bad</span>
-                                    <span class="text-xs text-gray-400">(1)</span>
+                                    <span class="text-xs text-gray-400">({{ $total_experience_summary['total_counts']['1'] }})</span>
                                 </div>
                             </th>
                             <th class="px-6 py-4 text-center text-sm font-medium text-gray-500 uppercase tracking-wider">
                                 <div class="flex flex-col items-center">
                                     <span class="text-orange-500">Bad</span>
-                                    <span class="text-xs text-gray-400">(2)</span>
+                                    <span class="text-xs text-gray-400">({{ $total_experience_summary['total_counts']['2'] }})</span>
                                 </div>
                             </th>
                             <th class="px-6 py-4 text-center text-sm font-medium text-gray-500 uppercase tracking-wider">
                                 <div class="flex flex-col items-center">
                                     <span class="text-yellow-500">Normal</span>
-                                    <span class="text-xs text-gray-400">(3)</span>
+                                    <span class="text-xs text-gray-400">({{ $total_experience_summary['total_counts']['3'] }})</span>
                                 </div>
                             </th>
                             <th class="px-6 py-4 text-center text-sm font-medium text-gray-500 uppercase tracking-wider">
                                 <div class="flex flex-col items-center">
                                     <span class="text-green-500">Good</span>
-                                    <span class="text-xs text-gray-400">(4)</span>
+                                    <span class="text-xs text-gray-400">({{ $total_experience_summary['total_counts']['4'] }})</span>
                                 </div>
                             </th>
                             <th class="px-6 py-4 text-center text-sm font-medium text-gray-500 uppercase tracking-wider">
                                 <div class="flex flex-col items-center">
                                     <span class="text-green-600">Very Good</span>
-                                    <span class="text-xs text-gray-400">(5)</span>
+                                    <span class="text-xs text-gray-400">({{ $total_experience_summary['total_counts']['5'] }})</span>
                                 </div>
                             </th>
                             <th class="px-6 py-4 text-center text-sm font-medium text-gray-500 uppercase tracking-wider">Average</th>
@@ -52,108 +52,147 @@
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
                         <!-- Teaching Methods Section -->
-                        <tr class="bg-gray-50">
-                            <td colspan="7" class="px-6 py-3">
-                                <h3 class="font-semibold text-gray-900">Teaching Methods</h3>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-6 py-4">
-                                <p class="text-gray-900">How well does the teacher explain complex concepts?</p>
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex flex-col items-center">
-                                    <span class="text-lg font-semibold text-gray-700">2</span>
-                                    <span class="text-sm text-gray-500">6.25%</span>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex flex-col items-center">
-                                    <span class="text-lg font-semibold text-gray-700">3</span>
-                                    <span class="text-sm text-gray-500">9.38%</span>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex flex-col items-center">
-                                    <span class="text-lg font-semibold text-gray-700">5</span>
-                                    <span class="text-sm text-gray-500">15.63%</span>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex flex-col items-center">
-                                    <span class="text-lg font-semibold text-gray-700">12</span>
-                                    <span class="text-sm text-gray-500">37.5%</span>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex flex-col items-center">
-                                    <span class="text-lg font-semibold text-gray-700">10</span>
-                                    <span class="text-sm text-gray-500">31.25%</span>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex items-center justify-center">
-                                    <span class="text-lg font-semibold bg-blue-100 text-blue-800 px-3 py-1 rounded-full">4.2</span>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <!-- Communication Section -->
-                        <tr class="bg-gray-50">
-                            <td colspan="7" class="px-6 py-3">
-                                <h3 class="font-semibold text-gray-900">Communication & Interaction</h3>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-6 py-4">
-                                <p class="text-gray-900">How well does the teacher respond to students' questions?</p>
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex flex-col items-center">
-                                    <span class="text-lg font-semibold text-gray-700">1</span>
-                                    <span class="text-sm text-gray-500">3.13%</span>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex flex-col items-center">
-                                    <span class="text-lg font-semibold text-gray-700">2</span>
-                                    <span class="text-sm text-gray-500">6.25%</span>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex flex-col items-center">
-                                    <span class="text-lg font-semibold text-gray-700">6</span>
-                                    <span class="text-sm text-gray-500">18.75%</span>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex flex-col items-center">
-                                    <span class="text-lg font-semibold text-gray-700">13</span>
-                                    <span class="text-sm text-gray-500">40.63%</span>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex flex-col items-center">
-                                    <span class="text-lg font-semibold text-gray-700">10</span>
-                                    <span class="text-sm text-gray-500">31.25%</span>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex items-center justify-center">
-                                    <span class="text-lg font-semibold bg-blue-100 text-blue-800 px-3 py-1 rounded-full">4.3</span>
-                                </div>
-                            </td>
-                        </tr>
+                        @foreach($result as $el)
+                            <tr class="bg-gray-50">
+                                <td colspan="7" class="px-6 py-3">
+                                    <h3 class="font-semibold text-gray-900">{{ $el['type'] }}</h3>
+                                </td>
+                            </tr>
+                            @foreach($el['questions'] as $question)
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4">
+                                        <p class="text-gray-900">{{ $question['question'] }}</p>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex flex-col items-center">
+                                            <span class="text-lg font-semibold text-gray-700">{{ $question['experience']['1']['count'] }}</span>
+                                            <span class="text-sm text-gray-500">{{ $question['experience']['1']['percentage'] }}%</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex flex-col items-center">
+                                            <span class="text-lg font-semibold text-gray-700">{{ $question['experience']['2']['count'] }}</span>
+                                            <span class="text-sm text-gray-500">{{ $question['experience']['2']['percentage'] }}%</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex flex-col items-center">
+                                            <span class="text-lg font-semibold text-gray-700">{{ $question['experience']['3']['count'] }}</span>
+                                            <span class="text-sm text-gray-500">{{ $question['experience']['3']['percentage'] }}%</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex flex-col items-center">
+                                            <span class="text-lg font-semibold text-gray-700">{{ $question['experience']['4']['count'] }}</span>
+                                            <span class="text-sm text-gray-500">{{ $question['experience']['4']['percentage'] }}%</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex flex-col items-center">
+                                            <span class="text-lg font-semibold text-gray-700">{{ $question['experience']['5']['count'] }}</span>
+                                            <span class="text-sm text-gray-500">{{ $question['experience']['5']['percentage'] }}%</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center justify-center">
+                                            <span class="text-lg font-semibold bg-blue-100 text-blue-800 px-3 py-1 rounded-full">{{ $question['average'] }}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="bg-green-300 hover:bg-green-500">
+                                    <td class="px-6 py-4">
+                                        <p class="text-gray-900">Expectation</p>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex flex-col items-center">
+                                            <span class="text-lg font-semibold text-gray-700">{{ $question['expectation']['1']['count'] }}</span>
+                                            <span class="text-sm text-gray-500">{{ $question['expectation']['1']['percentage'] }}%</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex flex-col items-center">
+                                            <span class="text-lg font-semibold text-gray-700">{{ $question['expectation']['2']['count'] }}</span>
+                                            <span class="text-sm text-gray-500">{{ $question['expectation']['2']['percentage'] }}%</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex flex-col items-center">
+                                            <span class="text-lg font-semibold text-gray-700">{{ $question['expectation']['3']['count'] }}</span>
+                                            <span class="text-sm text-gray-500">{{ $question['expectation']['3']['percentage'] }}%</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex flex-col items-center">
+                                            <span class="text-lg font-semibold text-gray-700">{{ $question['expectation']['4']['count'] }}</span>
+                                            <span class="text-sm text-gray-500">{{ $question['expectation']['4']['percentage'] }}%</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex flex-col items-center">
+                                            <span class="text-lg font-semibold text-gray-700">{{ $question['expectation']['5']['count'] }}</span>
+                                            <span class="text-sm text-gray-500">{{ $question['expectation']['5']['percentage'] }}%</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center justify-center">
+                                            <span class="text-lg font-semibold bg-blue-100 text-blue-800 px-3 py-1 rounded-full">{{ $question['average'] }}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endforeach
 
                         <!-- Overall Statistics -->
                         <tr class="bg-gray-100 font-semibold">
                             <td class="px-6 py-4">Overall Average</td>
                             <td colspan="5" class="px-6 py-4 text-center">
-                                Total Responses: 32 students
+                                Total Responses: {{ $total_students }} students
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center justify-center">
-                                    <span class="text-lg font-bold bg-green-100 text-green-800 px-3 py-1 rounded-full">4.25</span>
+                                    <span class="text-lg font-bold bg-green-100 text-green-800 px-3 py-1 rounded-full">{{ ((($question['experience']['1']['count'] * 1) + ($question['experience']['2']['count'] * 2) * ($question['experience']['3']['count'] * 3) + ($question['experience']['4']['count'] * 4) + ($question['experience']['5']['count'] * 5)) / ($question['experience']['1']['count'] + $question['experience']['2']['count'] + $question['experience']['3']['count'] + $question['experience']['4']['count'] + $question['experience']['5']['count'])) }}</span>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr class="bg-gray-100 font-semibold">
+                            <td class="px-6 py-4">Overall Expectation</td>
+                            <td colspan="5" class="px-6 py-4 text-center">
+                                Total Responses: {{ $total_students }} students
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center justify-center">
+                                    <span class="text-lg font-bold bg-green-100 text-green-800 px-3 py-1 rounded-full">{{ ((($question['expectation']['1']['count'] * 1) + ($question['expectation']['2']['count'] * 2) * ($question['expectation']['3']['count'] * 3) + ($question['expectation']['4']['count'] * 4) + ($question['expectation']['5']['count'] * 5)) / ($question['expectation']['1']['count'] + $question['expectation']['2']['count'] + $question['expectation']['3']['count'] + $question['expectation']['4']['count'] + $question['expectation']['5']['count'])) }}</span>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr class="bg-gray-100 font-semibold">
+                            <td class="px-6 py-4">Difference</td>
+                            <td colspan="5" class="px-6 py-4 text-center">
+                                Total Responses: {{ $total_students }} students
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center justify-center">
+                                    @php
+                                        $experience_total = 
+                                            ($question['experience']['1']['count'] * 1) + 
+                                            ($question['experience']['2']['count'] * 2) + 
+                                            ($question['experience']['3']['count'] * 3) + 
+                                            ($question['experience']['4']['count'] * 4) + 
+                                            ($question['experience']['5']['count'] * 5);
+
+                                        $expectation_total = 
+                                            ($question['expectation']['1']['count'] * 1) + 
+                                            ($question['expectation']['2']['count'] * 2) + 
+                                            ($question['expectation']['3']['count'] * 3) + 
+                                            ($question['expectation']['4']['count'] * 4) + 
+                                            ($question['expectation']['5']['count'] * 5);
+
+                                        $total_difference = $experience_total - $expectation_total;
+                                        $color = $total_difference > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
+                                    @endphp
+                                    <span class="text-lg font-bold {{ $color }} px-3 py-1 rounded-full">{{ ((($question['experience']['1']['count'] * 1) + ($question['experience']['2']['count'] * 2) * ($question['experience']['3']['count'] * 3) + ($question['experience']['4']['count'] * 4) + ($question['experience']['5']['count'] * 5))) - ((($question['expectation']['1']['count'] * 1) + ($question['expectation']['2']['count'] * 2) * ($question['expectation']['3']['count'] * 3) + ($question['expectation']['4']['count'] * 4) + ($question['expectation']['5']['count'] * 5))) }}</span>
                                 </div>
                             </td>
                         </tr>
@@ -164,7 +203,7 @@
             <!-- Visual Representation -->
             <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Summary Card -->
-                <div class="bg-white rounded-lg shadow-md p-6">
+                {{-- <div class="bg-white rounded-lg shadow-md p-6">
                     <h3 class="text-lg font-semibold mb-4">Quick Summary</h3>
                     <div class="space-y-4">
                         <div class="flex justify-between items-center">
@@ -185,7 +224,7 @@
                             <span class="font-bold text-green-600">Very Good</span>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Distribution Card -->
                 <div class="bg-white rounded-lg shadow-md p-6">
@@ -194,41 +233,49 @@
                         <div class="flex items-center gap-4">
                             <span class="text-sm w-20">Very Good</span>
                             <div class="flex-1 h-4 bg-gray-100 rounded-full overflow-hidden">
-                                <div class="h-full bg-green-500" style="width: 31.25%"></div>
+                                <div class="h-full bg-green-500" style="width: {{ $total_experience_summary['percentages']['5'] }}%"></div>
                             </div>
-                            <span class="text-sm w-16 text-right">31.25%</span>
+                            <span class="text-sm w-16 text-right">{{ $total_experience_summary['percentages']['5'] }}%</span>
                         </div>
                         <div class="flex items-center gap-4">
                             <span class="text-sm w-20">Good</span>
                             <div class="flex-1 h-4 bg-gray-100 rounded-full overflow-hidden">
-                                <div class="h-full bg-green-400" style="width: 39.06%"></div>
+                                <div class="h-full bg-green-400" style="width: {{ $total_experience_summary['percentages']['4'] }}%"></div>
                             </div>
-                            <span class="text-sm w-16 text-right">39.06%</span>
+                            <span class="text-sm w-16 text-right">{{ $total_experience_summary['percentages']['4'] }}%</span>
                         </div>
                         <div class="flex items-center gap-4">
                             <span class="text-sm w-20">Normal</span>
                             <div class="flex-1 h-4 bg-gray-100 rounded-full overflow-hidden">
-                                <div class="h-full bg-yellow-400" style="width: 17.19%"></div>
+                                <div class="h-full bg-yellow-400" style="width: {{ $total_experience_summary['percentages']['3'] }}%"></div>
                             </div>
-                            <span class="text-sm w-16 text-right">17.19%</span>
+                            <span class="text-sm w-16 text-right">{{ $total_experience_summary['percentages']['3'] }}%</span>
                         </div>
                         <div class="flex items-center gap-4">
                             <span class="text-sm w-20">Bad</span>
                             <div class="flex-1 h-4 bg-gray-100 rounded-full overflow-hidden">
-                                <div class="h-full bg-orange-400" style="width: 7.81%"></div>
+                                <div class="h-full bg-orange-400" style="width: {{ $total_experience_summary['percentages']['2'] }}%"></div>
                             </div>
-                            <span class="text-sm w-16 text-right">7.81%</span>
+                            <span class="text-sm w-16 text-right">{{ $total_experience_summary['percentages']['2'] }}%</span>
                         </div>
                         <div class="flex items-center gap-4">
                             <span class="text-sm w-20">Very Bad</span>
                             <div class="flex-1 h-4 bg-gray-100 rounded-full overflow-hidden">
-                                <div class="h-full bg-red-400" style="width: 4.69%"></div>
+                                <div class="h-full bg-red-400" style="width: {{ $total_experience_summary['percentages']['1'] }}%"></div>
                             </div>
-                            <span class="text-sm w-16 text-right">4.69%</span>
+                            <span class="text-sm w-16 text-right">{{ $total_experience_summary['percentages']['1'] }}%</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
+
+    <script>
+        const surveyResults = @json($result);
+
+        console.log(surveyResults, '<<< ini'); // Check the output in the browser console
+        const a = @json($total_experience_summary);
+        console.log(a);
+    </script>
 @endsection

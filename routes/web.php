@@ -38,6 +38,11 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/admin/teacher/{id}', [TeacherController::class, 'editTeacherInfo'])->name('teacher.update');
     Route::post('/admin/teacher', [TeacherController::class, 'addTeacher'])->name('teacher.add');
     Route::delete('/admin/teacher/{id}', [TeacherController::class, 'deleteTeacher'])->name('teacher.delete');
+
+    Route::get('/admin/student', [StudentController::class, 'getStudentsInfo'])->name('students.list');
+    Route::put('/admin/student/{id}', [StudentController::class, 'editStudentInfo'])->name('student.update');
+    Route::post('/admin/student', [StudentController::class, 'addStudent'])->name('student.add');
+    Route::delete('/admin/student/{id}', [StudentController::class, 'deleteStudent'])->name('student.delete');
     
     Route::get('/admin/question', [QuestionController::class, 'getQuestionsInfo']);
     Route::post('/admin/question', [QuestionController::class, 'addQuestion'])->name('question.add');
