@@ -150,7 +150,7 @@
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center justify-center">
-                                    <span class="text-lg font-bold bg-green-100 text-green-800 px-3 py-1 rounded-full">{{ ((($question['experience']['1']['count'] * 1) + ($question['experience']['2']['count'] * 2) * ($question['experience']['3']['count'] * 3) + ($question['experience']['4']['count'] * 4) + ($question['experience']['5']['count'] * 5)) / ($question['experience']['1']['count'] + $question['experience']['2']['count'] + $question['experience']['3']['count'] + $question['experience']['4']['count'] + $question['experience']['5']['count'])) }}</span>
+                                    <span class="text-lg font-bold bg-green-100 text-green-800 px-3 py-1 rounded-full">{{ number_format((($total_experience_summary['total_counts']['1']) + ($total_experience_summary['total_counts']['2'] * 2) + ($total_experience_summary['total_counts']['3'] * 3) + ($total_experience_summary['total_counts']['4'] * 4) + ($total_experience_summary['total_counts']['5'] * 5)) / ($total_experience_summary['total_counts']['1'] + $total_experience_summary['total_counts']['2'] + $total_experience_summary['total_counts']['3'] + $total_experience_summary['total_counts']['4'] + $total_experience_summary['total_counts']['5']), 2) }}</span>
                                 </div>
                             </td>
                         </tr>
@@ -162,7 +162,7 @@
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center justify-center">
-                                    <span class="text-lg font-bold bg-green-100 text-green-800 px-3 py-1 rounded-full">{{ ((($question['expectation']['1']['count'] * 1) + ($question['expectation']['2']['count'] * 2) * ($question['expectation']['3']['count'] * 3) + ($question['expectation']['4']['count'] * 4) + ($question['expectation']['5']['count'] * 5)) / ($question['expectation']['1']['count'] + $question['expectation']['2']['count'] + $question['expectation']['3']['count'] + $question['expectation']['4']['count'] + $question['expectation']['5']['count'])) }}</span>
+                                    <span class="text-lg font-bold bg-green-100 text-green-800 px-3 py-1 rounded-full">{{ number_format((($total_expectation_summary['total_counts']['1']) + ($total_expectation_summary['total_counts']['2'] * 2) + ($total_expectation_summary['total_counts']['3'] * 3) + ($total_expectation_summary['total_counts']['4'] * 4) + ($total_expectation_summary['total_counts']['5'] * 5)) / ($total_expectation_summary['total_counts']['1'] + $total_expectation_summary['total_counts']['2'] + $total_expectation_summary['total_counts']['3'] + $total_expectation_summary['total_counts']['4'] + $total_expectation_summary['total_counts']['5']), 2) }}</span>
                                 </div>
                             </td>
                         </tr>

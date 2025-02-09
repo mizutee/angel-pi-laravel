@@ -97,6 +97,7 @@ class TeacherController extends Controller
     
         // Initialize total counts
         $totalExperienceCounts = ["1" => 0, "2" => 0, "3" => 0, "4" => 0, "5" => 0];
+        $totalExpectationCounts = ["1" => 0, "2" => 0, "3" => 0, "4" => 0, "5" => 0];
 
         // Sum all experience values
         foreach ($surveyResults as $item) {
@@ -107,8 +108,17 @@ class TeacherController extends Controller
             $totalExperienceCounts["5"] += $item->exp_5;
         }
 
+        foreach ($surveyResults as $item) {
+            $totalExpectationCounts["1"] += $item->expc_1;
+            $totalExpectationCounts["2"] += $item->expc_2;
+            $totalExpectationCounts["3"] += $item->expc_3;
+            $totalExpectationCounts["4"] += $item->expc_4;
+            $totalExpectationCounts["5"] += $item->expc_5;
+        }
+
         // Calculate total responses
         $totalExperienceSum = array_sum($totalExperienceCounts);
+        $totalExpectationSum = array_sum($totalExpectationCounts);
 
         // Calculate percentages
         $experiencePercentages = [];
@@ -116,11 +126,22 @@ class TeacherController extends Controller
             $experiencePercentages[$key] = $totalExperienceSum > 0 ? round(($count / $totalExperienceSum) * 100, 2) : 0;
         }
 
+        $expectationPercentages = [];
+        foreach ($totalExpectationCounts as $key => $count) {
+            $expectationPercentages[$key] = $totalExpectationSum > 0 ? round(($count / $totalExpectationSum) * 100, 2) : 0;
+        }
+
         // Total experience summary
         $totalExperienceSummary = [
             "total_counts" => $totalExperienceCounts,
             "total_responses" => $totalExperienceSum,
             "percentages" => $experiencePercentages
+        ];
+
+        $totalExpectationSummary = [
+            "total_counts" => $totalExpectationCounts,
+            "total_responses" => $totalExpectationSum,
+            "percentages" => $expectationPercentages
         ];
     
         // Transform results into grouped format with percentages
@@ -187,6 +208,7 @@ class TeacherController extends Controller
             'user' => $user,
             'total_students' => $totalStudents,
             'total_experience_summary' => $totalExperienceSummary,
+            'total_expectation_summary' => $totalExpectationSummary,
             'result' => $formattedResults,
         ]);
     }
