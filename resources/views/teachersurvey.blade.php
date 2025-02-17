@@ -146,7 +146,6 @@
                         <tr class="bg-gray-100 font-semibold">
                             <td class="px-6 py-4">Overall Average</td>
                             <td colspan="5" class="px-6 py-4 text-center">
-                                Total Responses: {{ $total_students }} students
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center justify-center">
@@ -158,7 +157,6 @@
                         <tr class="bg-gray-100 font-semibold">
                             <td class="px-6 py-4">Overall Expectation</td>
                             <td colspan="5" class="px-6 py-4 text-center">
-                                Total Responses: {{ $total_students }} students
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center justify-center">
@@ -170,7 +168,6 @@
                         <tr class="bg-gray-100 font-semibold">
                             <td class="px-6 py-4">Difference</td>
                             <td colspan="5" class="px-6 py-4 text-center">
-                                Total Responses: {{ $total_students }} students
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center justify-center">
@@ -192,7 +189,7 @@
                                         $total_difference = $experience_total - $expectation_total;
                                         $color = $total_difference > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
                                     @endphp
-                                    <span class="text-lg font-bold {{ $color }} px-3 py-1 rounded-full">{{ ((($question['experience']['1']['count'] * 1) + ($question['experience']['2']['count'] * 2) * ($question['experience']['3']['count'] * 3) + ($question['experience']['4']['count'] * 4) + ($question['experience']['5']['count'] * 5))) - ((($question['expectation']['1']['count'] * 1) + ($question['expectation']['2']['count'] * 2) * ($question['expectation']['3']['count'] * 3) + ($question['expectation']['4']['count'] * 4) + ($question['expectation']['5']['count'] * 5))) }}</span>
+                                    <span class="text-lg font-bold {{ $color }} px-3 py-1 rounded-full">{{ $total_difference }}</span>
                                 </div>
                             </td>
                         </tr>
@@ -264,6 +261,24 @@
                                 <div class="h-full bg-red-400" style="width: {{ $total_experience_summary['percentages']['1'] }}%"></div>
                             </div>
                             <span class="text-sm w-16 text-right">{{ $total_experience_summary['percentages']['1'] }}%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-semibold mb-4">Overall Category</h3>
+                    <div class="space-y-4 flex flex-col">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm w-20">Memuaskan</span>
+                            <span class="text-sm w-20">>= 10</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm w-20">Cukup Memuaskan</span>
+                            <span class="text-sm w-20">>= -10 && <= 10</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm w-20">Diperlukan Training / Guru Di Review Kembali</span>
+                            <span class="text-sm w-20">< -10</span>
                         </div>
                     </div>
                 </div>

@@ -111,11 +111,6 @@
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                             </div>
 
-                            <!-- Additional Information Section -->
-                            <div class="col-span-2">
-                                <h4 class="text-md font-medium text-gray-700 mb-3 border-b pb-2 mt-4">Additional Information</h4>
-                            </div>
-
                             <div class="col-span-2">
                                 <label class="block text-sm font-medium text-gray-700">Address</label>
                                 <input id="editAddress" name="address"
@@ -199,11 +194,7 @@
                             <div class="col-span-2">
                                 <h4 class="text-md font-medium text-gray-700 mb-3 border-b pb-2 mt-4">Professional Information</h4>
                             </div>
-
-                            <div class="col-span-2">
-                                <h4 class="text-md font-medium text-gray-700 mb-3 border-b pb-2 mt-4">Additional Information</h4>
-                            </div>
-
+                            
                             <div class="col-span-2">
                                 <label class="block text-sm font-medium text-gray-700">Address</label>
                                 <input id="editAddress" name="address"
