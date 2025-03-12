@@ -36,6 +36,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/admin/teacher', [TeacherController::class, 'getTeachersInfo']);
     Route::put('/admin/teacher/{id}', [TeacherController::class, 'editTeacherInfo'])->name('teacher.update');
+    Route::get('/admin/teacher/{id}/download', [TeacherController::class, 'downloadTeacherReport'])->name('teacher.download');
     Route::post('/admin/teacher', [TeacherController::class, 'addTeacher'])->name('teacher.add');
     Route::delete('/admin/teacher/{id}', [TeacherController::class, 'deleteTeacher'])->name('teacher.delete');
 

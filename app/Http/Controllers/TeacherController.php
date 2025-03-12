@@ -9,6 +9,7 @@ use App\Models\Answer;
 use App\Models\Question;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class TeacherController extends Controller
 {
@@ -213,6 +214,42 @@ class TeacherController extends Controller
         ]);
     }
 
-    
+    public function downloadTeacherReport($id) {
+        $user = auth()->user();
+        // $teacher = User::findOrFail($id);
+        $teacher = User::with('subject')->findOrFail($id);
+        $query = Answer::join('questions', 'answers.question_id', '=', 'questions.id')
+        ->join('types', 'questions.type_id', '=', 'types.id')
+        ->select(
+            'types.name as type', 
+            'questions.question as question',
+            DB::raw('COUNT(DISTINCT answers.student_id) as total_students'),
+            DB::raw('COUNT(CASE WHEN answers.experience_value = 1 THEN 1 END) as exp_1'),
+            DB::raw('COUNT(CASE WHEN answers.experience_value = 2 THEN 1 END) as exp_2'),
+            DB::raw('COUNT(CASE WHEN answers.experience_value = 3 THEN 1 END) as exp_3'),
+            DB::raw('COUNT(CASE WHEN answers.experience_value = 4 THEN 1 END) as exp_4'),
+            DB::raw('COUNT(CASE WHEN answers.experience_value = 5 THEN 1 END) as exp_5'),
+            DB::raw('COUNT(CASE WHEN answers.expectation_value = 1 THEN 1 END) as expc_1'),
+            DB::raw('COUNT(CASE WHEN answers.expectation_value = 2 THEN 1 END) as expc_2'),
+            DB::raw('COUNT(CASE WHEN answers.expectation_value = 3 THEN 1 END) as expc_3'),
+            DB::raw('COUNT(CASE WHEN answers.expectation_value = 4 THEN 1 END) as expc_4'),
+            DB::raw('COUNT(CASE WHEN answers.expectation_value = 5 THEN 1 END) as expc_5')
+        )
+        ->where('answers.teacher_id', $id)
+        ->groupBy('types.name', 'questions.question');
+
+        // Execute the query
+        $surveyResults = $query->orderBy('types.name')->get();
+
+        $pdf = Pdf::loadView('reports.teacher_report', compact('user', 'teacher', 'surveyResults'));;
+
+        return $pdf->download("Survey_Report_{$teacher->name}.pdf");
+
+        // return view('downloadteacherreport', [
+        //     'user' => $user,
+        //     'teacher' => $teacher,
+        //     'surveyResults' => $surveyResults
+        // ]);
+    }
     
 }

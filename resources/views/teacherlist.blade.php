@@ -34,14 +34,21 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex space-x-2">
                                     <button onclick="openEditModal('{{ $teacher }}')"
-                                            class="text-blue-500 hover:text-blue-700">
+                                            class="text-blue-500 hover:text-blue-700"
+                                            title="Edit Teacher's Data"
+                                            >
                                         <i class="fas fa-edit"></i>
                                     </button>
                                     <form action="{{ route('teacher.delete', ['id' => $teacher->id]) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this teacher?');">
                                         @csrf
                                         @method("DELETE")
-                                        <button class="text-red-500 hover:text-red-700">
+                                        <button class="text-red-500 hover:text-red-700" title="Delete Teacher's Data">
                                             <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                    <form action="{{ route('teacher.download', ['id' => $teacher->id]) }}" method="GET">
+                                        <button class="text-blue-500 hover:text-blue-700" title="Download Teacher's Report">
+                                            <i class="fas fa-download"></i>
                                         </button>
                                     </form>
                                 </div>

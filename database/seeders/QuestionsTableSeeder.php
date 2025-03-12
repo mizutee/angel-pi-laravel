@@ -17,16 +17,16 @@ class QuestionsTableSeeder extends Seeder
 
         // Define questions
         $questions = [
-            ['id' => 1, 'text' => 'What are the key characteristics of Tangibles?', 'type_id' => 1],
-            ['id' => 2, 'text' => 'How do you measure Reliability in services?', 'type_id' => 2],
-            ['id' => 3, 'text' => 'What is the importance of Empathy in customer service?', 'type_id' => 3],
-            ['id' => 4, 'text' => 'How can Assurance be provided to customers?', 'type_id' => 4],
-            ['id' => 5, 'text' => 'What strategies can improve Responsiveness in service delivery?', 'type_id' => 5],
-            ['id' => 6, 'text' => 'Can you provide examples of Tangibles in your service?', 'type_id' => 1],
-            ['id' => 7, 'text' => 'What factors contribute to a customer’s perception of Reliability?', 'type_id' => 2],
-            ['id' => 8, 'text' => 'How does Empathy affect customer satisfaction?', 'type_id' => 3],
-            ['id' => 9, 'text' => 'What methods can be used to ensure Assurance in service quality?', 'type_id' => 4],
-            ['id' => 10, 'text' => 'In what ways can a business enhance its Responsiveness to customer inquiries?', 'type_id' => 5],
+            ['id' => 1, 'question' => 'What are the key characteristics of Tangibles?', 'type_id' => 1],
+            ['id' => 2, 'question' => 'How do you measure Reliability in services?', 'type_id' => 2],
+            ['id' => 3, 'question' => 'What is the importance of Empathy in customer service?', 'type_id' => 3],
+            ['id' => 4, 'question' => 'How can Assurance be provided to customers?', 'type_id' => 4],
+            ['id' => 5, 'question' => 'What strategies can improve Responsiveness in service delivery?', 'type_id' => 5],
+            ['id' => 6, 'question' => 'Can you provide examples of Tangibles in your service?', 'type_id' => 1],
+            ['id' => 7, 'question' => 'What factors contribute to a customer’s perception of Reliability?', 'type_id' => 2],
+            ['id' => 8, 'question' => 'How does Empathy affect customer satisfaction?', 'type_id' => 3],
+            ['id' => 9, 'question' => 'What methods can be used to ensure Assurance in service quality?', 'type_id' => 4],
+            ['id' => 10, 'question' => 'In what ways can a business enhance its Responsiveness to customer inquiries?', 'type_id' => 5],
         ];
 
         // Insert questions into the database

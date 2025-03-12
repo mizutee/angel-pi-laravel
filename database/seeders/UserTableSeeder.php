@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class UserTableSeeder extends Seeder
 {
@@ -13,7 +15,7 @@ class UserTableSeeder extends Seeder
     public function run(): void
     {
         // Default password for all users
-        $defaultPassword = '$2y$12$qzfzPAJW/rVEwCgkQ7rsZ.j.5nY58KnrN740LQssGu1qz7Uf3vodW';
+        $defaultPassword = '$2y$12$wELI1B/Hp2x2Y4wrrvukr.gwt2ggX040YCkVVG2ohMTr8e2EUPKCG';
 
         // Insert the admin user (only 1 admin)
         DB::table('users')->insert([
