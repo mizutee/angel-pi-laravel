@@ -251,5 +251,143 @@ class TeacherController extends Controller
         //     'surveyResults' => $surveyResults
         // ]);
     }
+
+    public function showOverallScores() {
+        $user = auth()->user();
+        $teachers = User::with('subject')
+            ->where('role', 'teacher')
+            ->get()
+            ->map(function ($teacher) {
+                $query = Answer::join('questions', 'answers.question_id', '=', 'questions.id')
+                    ->join('types', 'questions.type_id', '=', 'types.id')
+                    ->select(
+                        DB::raw('COALESCE(COUNT(DISTINCT answers.student_id), 0) as total_students'),
+                        DB::raw('COALESCE(COUNT(CASE WHEN answers.experience_value = 1 THEN 1 END), 0) as exp_1'),
+                        DB::raw('COALESCE(COUNT(CASE WHEN answers.experience_value = 2 THEN 1 END), 0) as exp_2'),
+                        DB::raw('COALESCE(COUNT(CASE WHEN answers.experience_value = 3 THEN 1 END), 0) as exp_3'),
+                        DB::raw('COALESCE(COUNT(CASE WHEN answers.experience_value = 4 THEN 1 END), 0) as exp_4'),
+                        DB::raw('COALESCE(COUNT(CASE WHEN answers.experience_value = 5 THEN 1 END), 0) as exp_5'),
+                        DB::raw('COALESCE(COUNT(CASE WHEN answers.expectation_value = 1 THEN 1 END), 0) as expc_1'),
+                        DB::raw('COALESCE(COUNT(CASE WHEN answers.expectation_value = 2 THEN 1 END), 0) as expc_2'),
+                        DB::raw('COALESCE(COUNT(CASE WHEN answers.expectation_value = 3 THEN 1 END), 0) as expc_3'),
+                        DB::raw('COALESCE(COUNT(CASE WHEN answers.expectation_value = 4 THEN 1 END), 0) as expc_4'),
+                        DB::raw('COALESCE(COUNT(CASE WHEN answers.expectation_value = 5 THEN 1 END), 0) as expc_5')
+                    )
+                    ->where('answers.teacher_id', $teacher->id)
+                    ->first() ?? (object) [
+                        'total_students' => 0, 'exp_1' => 0, 'exp_2' => 0, 'exp_3' => 0, 'exp_4' => 0, 'exp_5' => 0,
+                        'expc_1' => 0, 'expc_2' => 0, 'expc_3' => 0, 'expc_4' => 0, 'expc_5' => 0,
+                    ];
     
+                if ($query->total_students == 0) {
+                    return (object) [
+                        'name' => $teacher->name,
+                        'subject' => $teacher->subject ? $teacher->subject->name : 'N/A',
+                        'exp_avg' => 0,
+                        'expc_avg' => 0,
+                        'final_score' => 0,
+                        'grade' => 'Diperlukan Training / Guru Di Review Kembali',
+                    ];
+                }
+    
+                $totalExp = $query->total_students > 0
+                    ? ($query->exp_1 + ($query->exp_2 * 2) + ($query->exp_3 * 3) + ($query->exp_4 * 4) + ($query->exp_5 * 5)) / $query->total_students
+                    : 0;
+    
+                $totalExpc = $query->total_students > 0
+                    ? ($query->expc_1 + ($query->expc_2 * 2) + ($query->expc_3 * 3) + ($query->expc_4 * 4) + ($query->expc_5 * 5)) / $query->total_students
+                    : 0;
+    
+                $finalScore = ($totalExp - $totalExpc) * 10;
+    
+                $grade = 'Diperlukan Training / Guru Di Review Kembali';
+                if ($finalScore >= 10) {
+                    $grade = 'Memuaskan';
+                } elseif ($finalScore >= -10) {
+                    $grade = 'Cukup Memuaskan';
+                }
+    
+                return (object) [
+                    'name' => $teacher->name,
+                    'subject' => $teacher->subject ? $teacher->subject->name : 'N/A',
+                    'exp_avg' => round($totalExp, 2),
+                    'expc_avg' => round($totalExpc, 2),
+                    'final_score' => round($finalScore, 2),
+                    'grade' => $grade,
+                ];
+            });
+    
+        // dd($teachers->toArray()); // Debug output
+        return view('teachersoverallscore', compact('teachers', 'user'));
+    }
+    
+    public function downloadOverallScores() {
+        $user = auth()->user();
+        $teachers = User::with('subject')
+            ->where('role', 'teacher')
+            ->get()
+            ->map(function ($teacher) {
+                $query = Answer::join('questions', 'answers.question_id', '=', 'questions.id')
+                    ->join('types', 'questions.type_id', '=', 'types.id')
+                    ->select(
+                        DB::raw('COALESCE(COUNT(DISTINCT answers.student_id), 0) as total_students'),
+                        DB::raw('COALESCE(COUNT(CASE WHEN answers.experience_value = 1 THEN 1 END), 0) as exp_1'),
+                        DB::raw('COALESCE(COUNT(CASE WHEN answers.experience_value = 2 THEN 1 END), 0) as exp_2'),
+                        DB::raw('COALESCE(COUNT(CASE WHEN answers.experience_value = 3 THEN 1 END), 0) as exp_3'),
+                        DB::raw('COALESCE(COUNT(CASE WHEN answers.experience_value = 4 THEN 1 END), 0) as exp_4'),
+                        DB::raw('COALESCE(COUNT(CASE WHEN answers.experience_value = 5 THEN 1 END), 0) as exp_5'),
+                        DB::raw('COALESCE(COUNT(CASE WHEN answers.expectation_value = 1 THEN 1 END), 0) as expc_1'),
+                        DB::raw('COALESCE(COUNT(CASE WHEN answers.expectation_value = 2 THEN 1 END), 0) as expc_2'),
+                        DB::raw('COALESCE(COUNT(CASE WHEN answers.expectation_value = 3 THEN 1 END), 0) as expc_3'),
+                        DB::raw('COALESCE(COUNT(CASE WHEN answers.expectation_value = 4 THEN 1 END), 0) as expc_4'),
+                        DB::raw('COALESCE(COUNT(CASE WHEN answers.expectation_value = 5 THEN 1 END), 0) as expc_5')
+                    )
+                    ->where('answers.teacher_id', $teacher->id)
+                    ->first() ?? (object) [
+                        'total_students' => 0, 'exp_1' => 0, 'exp_2' => 0, 'exp_3' => 0, 'exp_4' => 0, 'exp_5' => 0,
+                        'expc_1' => 0, 'expc_2' => 0, 'expc_3' => 0, 'expc_4' => 0, 'expc_5' => 0,
+                    ];
+    
+                if ($query->total_students == 0) {
+                    return (object) [
+                        'name' => $teacher->name,
+                        'subject' => $teacher->subject ? $teacher->subject->name : 'N/A',
+                        'exp_avg' => 0,
+                        'expc_avg' => 0,
+                        'final_score' => 0,
+                        'grade' => 'Diperlukan Training / Guru Di Review Kembali',
+                    ];
+                }
+    
+                $totalExp = $query->total_students > 0
+                    ? ($query->exp_1 + ($query->exp_2 * 2) + ($query->exp_3 * 3) + ($query->exp_4 * 4) + ($query->exp_5 * 5)) / $query->total_students
+                    : 0;
+    
+                $totalExpc = $query->total_students > 0
+                    ? ($query->expc_1 + ($query->expc_2 * 2) + ($query->expc_3 * 3) + ($query->expc_4 * 4) + ($query->expc_5 * 5)) / $query->total_students
+                    : 0;
+    
+                $finalScore = ($totalExp - $totalExpc) * 10;
+    
+                $grade = 'Diperlukan Training / Guru Di Review Kembali';
+                if ($finalScore >= 10) {
+                    $grade = 'Memuaskan';
+                } elseif ($finalScore >= -10) {
+                    $grade = 'Cukup Memuaskan';
+                }
+    
+                return (object) [
+                    'name' => $teacher->name,
+                    'subject' => $teacher->subject ? $teacher->subject->name : 'N/A',
+                    'exp_avg' => round($totalExp, 2),
+                    'expc_avg' => round($totalExpc, 2),
+                    'final_score' => round($finalScore, 2),
+                    'grade' => $grade,
+                ];
+            });
+
+        $pdf = Pdf::loadView('reports.teacher_report_overall', compact('user', 'teachers'));;
+
+        return $pdf->download("Survey_Report_Overall.pdf");
+    }
 }

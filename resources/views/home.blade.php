@@ -41,6 +41,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="/admin/teacher/overall" class="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded-lg">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Teacher's Overall Score</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="/admin/student" class="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded-lg">
                             <i class="fas fa-graduation-cap"></i>
                             <span>Student's List</span>

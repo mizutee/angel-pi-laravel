@@ -39,6 +39,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/teacher/{id}/download', [TeacherController::class, 'downloadTeacherReport'])->name('teacher.download');
     Route::post('/admin/teacher', [TeacherController::class, 'addTeacher'])->name('teacher.add');
     Route::delete('/admin/teacher/{id}', [TeacherController::class, 'deleteTeacher'])->name('teacher.delete');
+    Route::get('/admin/teacher/overall', [TeacherController::class, 'showOverallScores'])->name('teacher.overall');
+    Route::get('/admin/teacher/download', [TeacherController::class, 'downloadOverallScores'])->name('teacher.overall.download');
 
     Route::get('/admin/student', [StudentController::class, 'getStudentsInfo'])->name('students.list');
     Route::put('/admin/student/{id}', [StudentController::class, 'editStudentInfo'])->name('student.update');
