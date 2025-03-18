@@ -350,6 +350,7 @@ class TeacherController extends Controller
     
                 if ($query->total_students == 0) {
                     return (object) [
+                        'id' => $teacher->id,
                         'name' => $teacher->name,
                         'subject' => $teacher->subject ? $teacher->subject->name : 'N/A',
                         'exp_avg' => 0,
@@ -377,6 +378,7 @@ class TeacherController extends Controller
                 }
     
                 return (object) [
+                    'id' => $teacher->id,
                     'name' => $teacher->name,
                     'subject' => $teacher->subject ? $teacher->subject->name : 'N/A',
                     'exp_avg' => round($totalExp, 2),
