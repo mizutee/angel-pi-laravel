@@ -239,6 +239,7 @@
 
         function closeEditModal() {
             document.getElementById('editStudentModal').classList.add('hidden');
+            document.getElementById('addStudentModal').classList.add('hidden');
         }
 
         function saveEdit() {

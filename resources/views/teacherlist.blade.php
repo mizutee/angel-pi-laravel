@@ -270,6 +270,7 @@
 
         function closeEditModal() {
             document.getElementById('editTeacherModal').classList.add('hidden');
+            document.getElementById('addTeacherModal').classList.add('hidden');
         }
 
         function saveEdit() {
